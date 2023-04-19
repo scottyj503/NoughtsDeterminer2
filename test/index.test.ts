@@ -4,7 +4,6 @@ import { naughtsDeterminer } from '..'
 describe('naughts determiner', () => {
   it('should return a X horizontal success', () => {
     const testArray: string[] = ["X", "-", "X", "<>", "-", "-", "O", "<>", "-", "-", "X"]
-    // const testArray: string[] = ["X", "-", "X", "<>"]
     const actual = naughtsDeterminer(testArray)
     const expected = 1
 

@@ -1,15 +1,15 @@
 // winners:
 
-// 0, 1, 2 = 3
-// 4, 5, 6 = 15
-// 8, 9, 10 = 27
+// 0, 1, 2
+// 4, 5, 6
+// 8, 9, 10
 
-// 0, 4, 8 = 12
-// 1, 5, 9 = 15
-// 2, 6, 10 = 18
+// 0, 4, 8
+// 1, 5, 9
+// 2, 6, 10
 
-// 0, 5, 10 = 15
-// 2, 5, 8 = 15
+// 0, 5, 10
+// 2, 5, 8
 
 // type NaughtIter = {
 //   X: {
@@ -69,9 +69,4 @@ export const naughtsDeterminer = (strArry: string[]): number => {
   }, arryReduced)
 
   if (checkHorizontalSuccess(arryReduced)) return arryReduced.X1BL[0]
-
-  // return { message: 'it works!' }
-  // console.log(checkHorizontalSuccess(arryReduced))
-  // console.log(arryReduced.X1BL[0])
-  // return 1
 }
