@@ -44,8 +44,8 @@ const isSuccess = (numArry: number[]): boolean => {
   return returnVal
 }
 
-const checkHorizontalSuccess = (naughtArry: NaughtIter): boolean => {
-  const combinedRow = [...naughtArry.X1, ...naughtArry.X1BL].sort()
+const checkHorizontalSuccess = (naughtArry: NaughtIter, mainPosition: string, blankPosition: string): boolean => {
+  const combinedRow = [...naughtArry[mainPosition], ...naughtArry[blankPosition]].sort()
 
   return isSuccess(combinedRow)
 }
@@ -65,8 +65,14 @@ export const naughtsDeterminer = (strArry: string[]): number => {
       if (currStr === 'X') accum.X1.push(indx)
       if (currStr === '-') accum.X1BL.push(indx)
     }
+
+    if (indx > 3 && indx < 7) {
+      if (currStr === 'X') accum.X2.push(indx)
+      if (currStr === '-') accum.X2BL.push(indx)
+    }
     return accum
   }, arryReduced)
 
-  if (checkHorizontalSuccess(arryReduced)) return arryReduced.X1BL[0]
+  if (checkHorizontalSuccess(arryReduced, "X1", "X1BL")) return arryReduced.X1BL[0]
+  if (checkHorizontalSuccess(arryReduced, "X2", "X2BL")) return arryReduced.X2BL[0]
 }
