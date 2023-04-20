@@ -22,12 +22,12 @@
 //   }
 // }
 type NaughtIter = {
+  X0: number[]
+  X0BL: number[]
   X1: number[]
   X1BL: number[]
   X2: number[]
   X2BL: number[]
-  X3: number[]
-  X3BL: number[]
 }
 
 const horizontalSuccess = [
@@ -58,33 +58,24 @@ const checkHorizontalSuccess = (naughtArry: NaughtIter, mainPosition: string, bl
 
 export const naughtsDeterminer = (strArry: string[]): number => {
   const arryReduced: NaughtIter = {
+    X0: [],
+    X0BL: [],
     X1: [],
     X1BL: [],
     X2: [],
-    X2BL: [],
-    X3: [],
-    X3BL: []
+    X2BL: []
   }
 
   strArry.reduce((accum, currStr, indx) => {
-    if (indx < 3 && currStr !== '<>') {
-      if (currStr === 'X') accum.X1.push(indx)
-      if (currStr === '-') accum.X1BL.push(indx)
-    }
+    const currentRowPos = currStr === "<>" ? Math.floor(indx/4) + 1 : Math.floor(indx/4)
 
-    if (indx > 3 && indx < 7) {
-      if (currStr === 'X') accum.X2.push(indx)
-      if (currStr === '-') accum.X2BL.push(indx)
-    }
+      if (currStr === 'X') accum["X" + currentRowPos].push(indx)
+      if (currStr === '-') accum["X" + currentRowPos + "BL"].push(indx)
 
-    if (indx > 7) {
-      if (currStr === 'X') accum.X3.push(indx)
-      if (currStr === '-') accum.X3BL.push(indx)
-    }
     return accum
   }, arryReduced)
 
+  if (checkHorizontalSuccess(arryReduced, "X0", "X0BL")) return arryReduced.X0BL[0]
   if (checkHorizontalSuccess(arryReduced, "X1", "X1BL")) return arryReduced.X1BL[0]
   if (checkHorizontalSuccess(arryReduced, "X2", "X2BL")) return arryReduced.X2BL[0]
-  if (checkHorizontalSuccess(arryReduced, "X3", "X3BL")) return arryReduced.X3BL[0]
 }
