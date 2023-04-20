@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "test": "ts-mocha 'test/**/*.test.ts' --exit"
+    "test": "ts-mocha 'test/**/*.test.ts' --exit",
+    "test:watch": "ts-mocha 'test/**/*.test.ts' -w --watch-files '**/*.ts'"
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",
