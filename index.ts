@@ -11,30 +11,13 @@
 // 0, 5, 10
 // 2, 5, 8
 
-// type NaughtIter = {
-//   X: {
-//     X1: number[]
-//     X1BL: number[]
-//     X2: number[]
-//     X2BL: number[]
-//     X3: number[]
-//     X3BL: number[]
-//   }
-// }
-type NaughtIter = {
-  X0: number[]
-  X0BL: number[]
-  X1: number[]
-  X1BL: number[]
-  X2: number[]
-  X2BL: number[]
-  O0: number[]
-  O0BL: number[]
-  O1: number[]
-  O1BL: number[]
-  O2: number[]
-  O2BL: number[]
-
+type TicTacToeBoard = {
+  X_0: { selected: number[], blank: number[] }
+  X_1: { selected: number[], blank: number[] }
+  X_2: { selected: number[], blank: number[] }
+  O_0: { selected: number[], blank: number[] }
+  O_1: { selected: number[], blank: number[] }
+  O_2: { selected: number[], blank: number[] }
 }
 
 const horizontalSuccess = [
@@ -57,45 +40,41 @@ const numCompare = (a: number, b: number): number => {
   return 0
 }
 
-const checkHorizontalSuccess = (naughtArry: NaughtIter, mainPosition: string, blankPosition: string): boolean => {
-  const combinedRow: number[] = [...naughtArry[mainPosition], ...naughtArry[blankPosition]].sort(numCompare)
+
+const combinedAndCheckSuccess = (row:{ selected: number[], blank: number[] }): boolean => {
+  const combinedRow: number[] = [...row.selected, ...row.blank].sort(numCompare)
 
   return isSuccess(combinedRow)
 }
 
+const getSuccessValue = (naughtObj: TicTacToeBoard): number => {
+
+  for (const [_key, value] of Object.entries(naughtObj)) {
+    if (combinedAndCheckSuccess(value)) return value.blank[0]
+  }
+}
+
 export const naughtsDeterminer = (strArry: string[]): number => {
-  const arryReduced: NaughtIter = {
-    X0: [],
-    X0BL: [],
-    X1: [],
-    X1BL: [],
-    X2: [],
-    X2BL: [],
-    O0: [],
-    O0BL: [],
-    O1: [],
-    O1BL: [],
-    O2: [],
-    O2BL: []
+  const ticTacToeBoard: TicTacToeBoard = {
+    X_0: { selected: [], blank:[] },
+    X_1: { selected: [], blank: [] },
+    X_2: { selected: [], blank: [] },
+    O_0: { selected: [], blank: [] },
+    O_1: { selected: [], blank: [] },
+    O_2: { selected: [], blank: [] },
   }
 
   strArry.reduce((accum, currStr, indx) => {
     const currentRowPos = currStr === "<>" ? Math.floor(indx / 4) + 1 : Math.floor(indx / 4)
 
-    if (currStr === 'X') accum["X" + currentRowPos].push(indx)
-    if (currStr === '-') accum["X" + currentRowPos + "BL"].push(indx)
+    if (currStr === 'X') accum["X_" + currentRowPos].selected.push(indx)
+    if (currStr === '-') accum["X_" + currentRowPos].blank.push(indx)
 
-    if (currStr === 'O') accum["O" + currentRowPos].push(indx)
-    if (currStr === '-') accum["O" + currentRowPos + "BL"].push(indx)
-
+    if (currStr === 'O') accum["O_" + currentRowPos].selected.push(indx)
+    if (currStr === '-') accum["O_" + currentRowPos].blank.push(indx)
 
     return accum
-  }, arryReduced)
+  }, ticTacToeBoard)
 
-  if (checkHorizontalSuccess(arryReduced, "X0", "X0BL")) return arryReduced.X0BL[0]
-  if (checkHorizontalSuccess(arryReduced, "X1", "X1BL")) return arryReduced.X1BL[0]
-  if (checkHorizontalSuccess(arryReduced, "X2", "X2BL")) return arryReduced.X2BL[0]
-
-  if (checkHorizontalSuccess(arryReduced, "O0", "O0BL")) return arryReduced.X0BL[0]
-
+  return getSuccessValue(ticTacToeBoard)
 }
