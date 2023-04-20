@@ -18,4 +18,12 @@ describe('naughts determiner', () => {
     expect(actual).to.eql(expected)
 
   })
+  it('should return a X horizontal success for third row', () => {
+    const testArray: string[] = ["X", "O", "X", "<>", "O", "X", "O", "<>", "X", "X", "-"]
+    const actual = naughtsDeterminer(testArray)
+    const expected = 10
+
+    expect(actual).to.eql(expected)
+
+  })
 })
