@@ -30,8 +30,12 @@ describe('naughts determiner', () => {
   })
 
   context("O Horizontal Row", () => {
-    it("should return success for the first row", () => {
-      const testArray: string[] = ["O", "O", "-", "<>", "-", "-", "X", "<>", "-", "X", "O"]
+    it.only("should return success for the first row", () => {
+      const testArray: string[] = [
+        "O", "O", "-", "<>",
+        "O", "-", "X", "<>",
+        "-", "X", "O"
+      ]
       const actual = naughtsDeterminer(testArray)
       const expected = 2
 
